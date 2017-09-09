@@ -21,7 +21,7 @@ class Circle
         /////default constructor
         Circle();
         /////constructor 
-        Circle(double rad);
+        Circle(double rad); 
 
         ////set & get functions
         void setRadius(double rad);
