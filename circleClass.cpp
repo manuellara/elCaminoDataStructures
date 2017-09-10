@@ -5,17 +5,17 @@ Manuel Lara
 Review Question 2
 
 */
+
 #include <iostream>
 
 using namespace std;
-
-const double pi = 3.14159;
 
 ////circle class 
 class Circle
 {
     private:
         double radius;
+        const double pi = 3.14159;
 
     public:
         /////default constructor
@@ -23,12 +23,30 @@ class Circle
         /////constructor 
         Circle(double rad); 
 
-        ////set & get functions
-        void setRadius(double rad);
-        void getRadius();
-        double getArea();
-        double getDiameter();
-        double getCircumfrence();
+        ////setter & getters
+        void setRadius(double rad)
+        {
+            radius = rad;
+        }
+        double getRadius()
+        {
+            return radius;
+        }
+        double getArea()
+        {
+            double area = pi * radius * radius;
+            return area;
+        }
+        double getDiameter()
+        {
+            double diameter = radius * 2;
+            return diameter;
+        }
+        double getCircumfrence()
+        {
+            double circumfrence = 2 * pi * radius;
+            return circumfrence;
+        }
         
 
 };
