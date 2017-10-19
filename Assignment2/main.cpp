@@ -240,9 +240,44 @@ int Player::age() const
 
 string Player::takeComputerChosenTurn()
 {
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // TODO:  Replace this implementation:
-        stand();
-        return "Stood";
+    int random = rand() % 3 + 1 ;
+    int movement = rand() % 4;
+    bool result;
+    
+
+    switch ( random )
+    {
+        case 1:
+            stand();
+            return "Stood";
+        case 2:
+            move( movement );
+            return "moved";
+        case 3:
+            result = shoot( movement );
+            if (result == true)
+            {
+                return "robot shot and damaged.";
+            }
+            else 
+            {
+                return "shot but missed.";
+            }
+        case 4:
+            result = shoot( movement );
+            if (result == true)
+            {
+                return "robot shot and damaged.";
+            }
+            else 
+            {
+                return "shot but missed.";
+            }  //DONE
+        
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Your replacement implementation should do something intelligent
     // and return a string that describes what happened.  When you've
     // decided what action to take, take it by calling move, shoot, or stand.
