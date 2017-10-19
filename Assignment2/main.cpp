@@ -379,11 +379,18 @@ void Arena::display(string msg) const
 
       // Indicate each robot's position
       // TODO:  If one robot is at some grid point, set the char to 'R'.
-      //        If it's 2 though 8, set it to '2' through '8'.
+      //        If it's 2 through 8, set it to '2' through '8'.
       //        For 9 or more, set it to '9'.
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+    if (m_nRobots != 0)
+    {
+        if ( m_robots[m_nRobots]->row() == r && m_robots[m_nRobots]->col() == c )
+        {
+            grid[r][c] = 'R';
+        }
+        ////////else statement for 2 through 8 -- almost DONE
+    }
    
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -442,7 +449,9 @@ bool Arena::addRobot(int r, int c)
     else
     {
         m_robots[m_nRobots] = new Robot( this , r , c );
+        m_nRobots++;
         return true;
+        // DONE
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
