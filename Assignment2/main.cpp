@@ -169,23 +169,26 @@ int Robot::col() const
       // Delete the following line and replace it with the correct code.
     return m_col;  // DONE
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Robot::move()
 {
       // Attempt to move in a random direction; if we can't move, don't move
     switch (rand() % 4)
     {
       case UP:
-        // TODO:  Move the robot up one row if possible.
+        m_row--;
         break;
       case DOWN:
+        m_row++;
       case LEFT:
+        m_col--;
       case RIGHT:
         // TODO:  Implement the other movements.
+        m_col++;
         break;
     }
-}
-
+}//DONE
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool Robot::takeDamageAndLive()
 {
       // TODO:  If the robot has been hit once before, return false (since a
