@@ -302,23 +302,27 @@ void Player::stand()
 {
     m_age++;
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void Player::move(int dir)
 {
     m_age++;
     switch (dir)
     {
       case UP:
-        // TODO:  Move the player up one row if possible.
+        m_row--;
         break;
       case DOWN:
+        m_row++;
+        break;
       case LEFT:
+        m_col--;
+        break;
       case RIGHT:
-        // TODO:  Implement the other movements.
+        m_col++;
         break;
     }
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 bool Player::shoot(int dir)
 {
     m_age++;
@@ -421,14 +425,13 @@ void Arena::display(string msg) const
       //        For 9 or more, set it to '9'.
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    if (m_nRobots != 0)
+ 
+    if ( m_robots[m_nRobots]->row() == r && m_robots[m_nRobots]->col() == c )
     {
-        if ( m_robots[m_nRobots]->row() == r && m_robots[m_nRobots]->col() == c )
-        {
-            grid[r][c] = 'R';
-        }
-        ////////else statement for 2 through 8 -- almost DONE
+        grid[r][c] = 'R';
     }
+    ////////else statement for 2 through 8 -- almost DONE
+    
    
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -486,7 +489,7 @@ bool Arena::addRobot(int r, int c)
     }
     else
     {
-        m_robots[m_nRobots] = new Robot( this , r , c );
+        m_robots[m_nRobots+1] = new Robot( this , r , c );
         m_nRobots++;
         return true;
         // DONE
@@ -595,8 +598,16 @@ void Game::play()
                 msg = p->takeComputerChosenTurn();
                 break;
               case 'u':
+              //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                p->move(0);
+                break;
               case 'd':
+                p->move(1);
+                break;
               case 'l':
+                p->move(2);
+                break;
+                //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
               case 'r':
                 p->move(decodeDirection(action[0]));
                 break;
