@@ -159,6 +159,7 @@ Robot::Robot(Arena* ap, int r, int c)
     m_arena = ap;
     m_row = r;
     m_col = c;
+    damageCount = 0;
 }
 
 int Robot::row() const
@@ -197,6 +198,15 @@ bool Robot::takeDamageAndLive()
       // TODO:  If the robot has been hit once before, return false (since a
       // second hit kills a robot).  Otherwise, return true (since the robot
       // survived the damage).
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    damageCount++;
+
+    if (damageCount == 2)
+    {
+        return false;       //DONE
+    }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -330,12 +340,23 @@ bool Player::shoot(int dir)
 {
     m_age++;
 
-    if (rand() % 3 == 0)  // miss with 1/3 probability
+    if (rand() % 3 == 0)
+    {  // miss with 1/3 probability
         return false;
+    }
 
       // TODO:  Damage the nearest robot in direction dir, returning
       // true if a robot is hit and damaged, false if not hit.
-    return false;  // This implementation compiles, but is incorrect.
+    // This implementation compiles, but is incorrect.
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    switch( rand() % 3 )
+    {
+        case 0:
+            if(m_arena-> )
+            {
+
+            }
+    }
 }
 
 bool Player::isDead() const
@@ -426,20 +447,15 @@ void Arena::display(string msg) const
       // TODO:  If one robot is at some grid point, set the char to 'R'.
       //        If it's 2 through 8, set it to '2' through '8'.
       //        For 9 or more, set it to '9'.
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     for (r = 0; r < rows(); r++)
         for (c = 0; c < cols(); c++)
             if (grid[r][c] == grid[m_robots[m_nRobots]->row()-1][m_robots[m_nRobots]->col()-1])
             {
                 grid[r][c] = 'R';       //if grid points are the same as the robots, put 'R' instead 
-
             }
     
-    ////////else statement for 2 through 8 -- almost DONE
-    
-   
-
+    ////else statement for 2 through 8 -- almost DONE
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -516,6 +532,18 @@ void Arena::damageRobotAt(int r, int c)
 {
       // TODO:  Damage one robot at row r, column c if at least one is there.
       // If the robot does not survive the damage, destroy it.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if (r == m_robots[m_nRobots]->row() && c == m_robots[m_nRobots]->col() )
+    {
+        bool x = m_robots[m_nRobots]->takeDamageAndLive() ;     //damage robot
+
+        if ( x == true )
+        {
+            delete m_robots[m_nRobots];         //delete robot[index]
+        }
+    }
+    //DONE
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 bool Arena::moveRobots()
