@@ -428,7 +428,8 @@ void Arena::display(string msg) const
       //        For 9 or more, set it to '9'.
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- 
+    for (r = 0; r < rows(); r++)
+        for (c = 0; c < cols(); c++)
             if (grid[r][c] == grid[m_robots[m_nRobots]->row()-1][m_robots[m_nRobots]->col()-1])
             {
                 grid[r][c] = 'R';       //if grid points are the same as the robots, put 'R' instead 
