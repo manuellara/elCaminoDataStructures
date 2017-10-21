@@ -349,13 +349,91 @@ bool Player::shoot(int dir)
       // true if a robot is hit and damaged, false if not hit.
     // This implementation compiles, but is incorrect.
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    switch( rand() % 3 )
+
+    int z = rand() % 3;
+    switch( z )
     {
         case 0:
-            if(m_arena-> )
-            {
+        {
+            int x = 0;
 
-            }
+            do{
+                int x = m_arena->nRobotsAt( m_row , m_col );     //if robot exists at coordinates
+                
+                    if( x == 1 )
+                        {
+                            m_arena->damageRobotAt( m_row , m_col );    //damage robot
+                            return true;
+                        }
+                    else
+                    {
+                        m_col--;
+                    }
+
+            }while( x == 0 );
+            break;
+        }
+        case 1:
+        {
+            int x = 0;
+
+            do{
+                int x = m_arena->nRobotsAt( m_row , m_col );     //if robot exists at coordinates
+                
+                    if( x == 1 )
+                        {
+                            m_arena->damageRobotAt( m_row , m_col );    //damage robot
+                            return true;
+                        }
+                    else
+                    {
+                        m_col++;
+                    }
+
+            }while( x == 0 );
+            break;
+        }
+        case 2:
+        {
+            int x = 0;
+
+            do{
+                int x = m_arena->nRobotsAt( m_row , m_col );     //if robot exists at coordinates
+                
+                    if( x == 1 )
+                        {
+                            m_arena->damageRobotAt( m_row , m_col );    //damage robot
+                            return true;
+                        }
+                    else
+                    {
+                        m_row--;
+                    }
+
+            }while( x == 0 );
+            break;
+        }
+        case 3:
+        {
+            int x = 0;
+
+            do{
+                int x = m_arena->nRobotsAt( m_row , m_col );     //if robot exists at coordinates
+                
+                    if( x == 1 )
+                        {
+                            m_arena->damageRobotAt( m_row , m_col );    //damage robot
+                            return true;
+                        }
+                    else
+                    {
+                        m_row++;
+                    }
+
+            }while( x == 0 );
+            break;
+        }
+
     }
 }
 
@@ -428,7 +506,15 @@ int Arena::robotCount() const
 int Arena::nRobotsAt(int r, int c) const
 {
     // TODO:  Return the number of robots at row r, column c.
-    return 0;  // This implementation compiles, but is incorrect.
+    if(m_robots[m_nRobots]->row() == r && m_robots[m_nRobots]->col() == c)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+
 }
 
 void Arena::display(string msg) const
