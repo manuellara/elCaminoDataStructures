@@ -61,6 +61,9 @@ class Robot
     Arena* m_arena;
     int    m_row;
     int    m_col;
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    int    damageCount; //DONE
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       // TODO: You'll probably find that a robot object needs an additional
       // data member to support your implementation of the behavior affected
       // by being hit and taking damage.
@@ -426,10 +429,12 @@ void Arena::display(string msg) const
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  
-    if ( m_robots[m_nRobots]->row() == r && m_robots[m_nRobots]->col() == c )
-    {
-        grid[r][c] = 'R';
-    }
+            if (grid[r][c] == grid[m_robots[m_nRobots]->row()-1][m_robots[m_nRobots]->col()-1])
+            {
+                grid[r][c] = 'R';       //if grid points are the same as the robots, put 'R' instead 
+
+            }
+    
     ////////else statement for 2 through 8 -- almost DONE
     
    
@@ -487,13 +492,11 @@ bool Arena::addRobot(int r, int c)
     {
         return false;
     }
-    else
-    {
-        m_robots[m_nRobots+1] = new Robot( this , r , c );
-        m_nRobots++;
-        return true;
-        // DONE
-    }
+
+    m_robots[m_nRobots] = new Robot( this , r , c ); ///initializes robot(m_robots) at robot count(m_nRobots)
+    m_nRobots++;        //increment count every iteration
+    return true;
+
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
