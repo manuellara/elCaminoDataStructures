@@ -607,10 +607,12 @@ bool Arena::addRobot(int r, int c)
     {
         return false;
     }
-
-    m_robots[m_nRobots] = new Robot( this , r , c ); ///initializes robot(m_robots) at robot count(m_nRobots)
-    m_nRobots++;        //increment count every iteration
-    return true;
+    else
+    {
+        m_robots[m_nRobots] = new Robot( this , r , c ); ///initializes robot(m_robots) at robot count(m_nRobots)
+        m_nRobots++;        //increment count every iteration
+        return true;
+    }
 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -822,7 +824,6 @@ int main()
 // Note to Xcode users:  clearScreen() will just write a newline instead
 // of clearing the window if you launch your program from within Xcode.
 // That's acceptable.
-
 
 #ifdef _MSC_VER  //  Microsoft Visual C++
 
