@@ -206,6 +206,7 @@ bool Robot::takeDamageAndLive()
         return false;       //DONE
     }
 
+    return true;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
@@ -266,12 +267,17 @@ string Player::takeComputerChosenTurn()
     switch ( random )
     {
         case 1:
+        {
             stand();
             return "Stood";
+        }
         case 2:
+        {
             move( movement );
             return "moved";
+        }
         case 3:
+        {
             result = shoot( movement );
             if (result == true)
             {
@@ -281,7 +287,9 @@ string Player::takeComputerChosenTurn()
             {
                 return "shot but missed.";
             }
+        }
         case 4:
+        {
             result = shoot( movement );
             if (result == true)
             {
@@ -291,8 +299,10 @@ string Player::takeComputerChosenTurn()
             {
                 return "shot but missed.";
             }  //DONE
-        
+        }
+            
     }
+    return "";
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Your replacement implementation should do something intelligent
     // and return a string that describes what happened.  When you've
@@ -435,6 +445,8 @@ bool Player::shoot(int dir)
         }
 
     }
+
+    return true;
 }
 
 bool Player::isDead() const
@@ -639,6 +651,14 @@ bool Arena::moveRobots()
       // TODO:  Have the k-th robot in the arena make one move.
       //        If that move results in that robot being in the same
       //        position as the player, the player dies.
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        m_robots[k]->move();
+        if( m_robots[k]->row() == player()->row() && m_robots[k]->col() == player()->col() )
+        {
+            return m_player->isDead();
+        } //DONE
+
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
       // return true if the player is still alive, false otherwise
