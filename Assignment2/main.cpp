@@ -267,17 +267,12 @@ string Player::takeComputerChosenTurn()
     switch ( random )
     {
         case 1:
-        {
             stand();
             return "Stood";
-        }
         case 2:
-        {
             move( movement );
             return "moved";
-        }
         case 3:
-        {
             result = shoot( movement );
             if (result == true)
             {
@@ -287,9 +282,7 @@ string Player::takeComputerChosenTurn()
             {
                 return "shot but missed.";
             }
-        }
         case 4:
-        {
             result = shoot( movement );
             if (result == true)
             {
@@ -299,7 +292,6 @@ string Player::takeComputerChosenTurn()
             {
                 return "shot but missed.";
             }  //DONE
-        }
             
     }
     return "";
@@ -486,10 +478,18 @@ Arena::Arena(int nRows, int nCols)
     m_nRobots = 0;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Arena::~Arena()
 {
       // TODO:  Delete the player and all remaining dynamically allocated robots.
+      delete player();
+
+      for (int i = 0 ; i < m_nRobots ; i++)
+      {
+          delete m_robots[i];
+      }
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int Arena::rows() const
 {
@@ -822,6 +822,7 @@ int main()
 // Note to Xcode users:  clearScreen() will just write a newline instead
 // of clearing the window if you launch your program from within Xcode.
 // That's acceptable.
+
 
 #ifdef _MSC_VER  //  Microsoft Visual C++
 
