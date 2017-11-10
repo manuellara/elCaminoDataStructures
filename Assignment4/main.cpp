@@ -10,6 +10,7 @@ using namespace std;
 bool fileInput( ifstream &fin );
 void fileAnalysis( ifstream &fin );
 void push( string line , stack<char> &stack );
+void filter( stack<char> &stack );
 
 int main()
 {
@@ -54,14 +55,10 @@ void fileAnalysis( ifstream &fin )
         
         push( line , stack );                       //characters are pushed onto stack 
     }
-    
+
     //////stack is populated
 
-    while( !stack.empty() )
-    {
-        cout << stack.top();
-        stack.pop();
-    }
+    filter( stack );                                //stack is passed to filter function
 
 }
 
@@ -77,4 +74,23 @@ void push( string line , stack<char> &stack )
             stack.push( line[i] );
         }
     }
+}
+
+void filter( stack<char> &stack )
+{
+    string invalid = "'";
+    char singleQ = invalid[0];              //single quote
+
+    char doubleQ = '\"' ;                   //double quote
+
+    char openP = '{' ; 
+    char closeP = '}';                      //parenthesis
+
+    char star = '*' ; 
+    char fSlash = '/' ; 
+    char bSlash = '\\' ;                     //comments
+
+    char whiteList[] = { singleQ , doubleQ , openP , closeP , star , fSlash , bSlash };
+
+
 }
