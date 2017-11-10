@@ -1,12 +1,15 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <stack>
+#include <cctype>
 
 using namespace std;
 
 ////prototype
 bool fileInput( ifstream &fin );
 void fileAnalysis( ifstream &fin );
+void push( string line , stack<char> &stack );
 
 int main()
 {
@@ -43,12 +46,35 @@ bool fileInput( ifstream &fin )
 void fileAnalysis( ifstream &fin )
 {
     string line;
+    stack<char> stack;                              //stack of char
 
-    while( !fin.eof() )                     //while not end of file
+    while( !fin.eof() )                             //while not end of file
     {
-        getline( fin , line );
+        getline( fin , line );                      //gets line from file
         
-        cout << line << endl;
+        push( line , stack );                       //characters are pushed onto stack 
+    }
+    
+    //////stack is populated
+
+    while( !stack.empty() )
+    {
+        cout << stack.top();
+        stack.pop();
     }
 
+}
+
+void push( string line , stack<char> &stack )
+{
+    //string invalid = "'";
+    //char singleQ = invalid[0];              //single quote
+
+    for ( int i = 0 ; i < line.length() ; i++ )
+    {
+        if( !isspace( line[i] ) )
+        {
+            stack.push( line[i] );
+        }
+    }
 }
