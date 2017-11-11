@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <stack>
+#include <vector>
 #include <cctype>
 
 using namespace std;
@@ -9,8 +10,7 @@ using namespace std;
 ////prototype
 bool fileInput( ifstream &fin );
 void fileAnalysis( ifstream &fin );
-void push( string line , stack<char> &stack );
-void filter( stack<char> &stack );
+void filter( string line , stack<char> &stack , vector<string> &vector );
 
 int main()
 {
@@ -23,11 +23,11 @@ int main()
 
 bool fileInput( ifstream &fin )
 {
-    string target = "sample.txt";
+    string target = "sample.txt";       //file name
 
     fin.open( target.c_str() );         //attempt to open target file
 
-    if ( fin.fail() )           //if fin fails, exit - else return file 
+    if ( fin.fail() )                   //if fin fails, exit - else return file 
     {
         cout << "File failed to open..." << endl;
         return false;
@@ -48,49 +48,42 @@ void fileAnalysis( ifstream &fin )
 {
     string line;
     stack<char> stack;                              //stack of char
+    vector<string> vector;                            //vector declaration
+
 
     while( !fin.eof() )                             //while not end of file
     {
         getline( fin , line );                      //gets line from file
         
-        push( line , stack );                       //characters are pushed onto stack 
+        filter( line , stack , vector );                       //characters are pushed onto stack 
     }
 
-    //////stack is populated
+    ////stack populated  end->beginning
+    ////vector populated ( index ) beginning->end
 
-    filter( stack );                                //stack is passed to filter function
+    cout << stack.size() << endl;
 
+    while( !stack.empty() )
+    {
+        cout << stack.top();
+        stack.pop();
+    }
+
+    cout << endl;
 }
 
-void push( string line , stack<char> &stack )
-{
-    //string invalid = "'";
-    //char singleQ = invalid[0];              //single quote
+void filter( string line , stack<char> &stack , vector<string>& vector )
+{    
+    char whiteList[] = { '\'' , '\"' , '{' , '}' , '*' , '/' };
 
     for ( int i = 0 ; i < line.length() ; i++ )
     {
-        if( !isspace( line[i] ) )
+        for( int x = 0 ; x < 6 ; x++ )
         {
-            stack.push( line[i] );
+            if( !isspace( line[i] ) && line[i] == whiteList[x] )      //if character is not white space AND is in the whitelist
+            {
+                stack.push( line[i] );              //adds to stack
+            }
         }
     }
-}
-
-void filter( stack<char> &stack )
-{
-    string invalid = "'";
-    char singleQ = invalid[0];              //single quote
-
-    char doubleQ = '\"' ;                   //double quote
-
-    char openP = '{' ; 
-    char closeP = '}';                      //parenthesis
-
-    char star = '*' ; 
-    char fSlash = '/' ; 
-    char bSlash = '\\' ;                     //comments
-
-    char whiteList[] = { singleQ , doubleQ , openP , closeP , star , fSlash , bSlash };
-
-
 }
