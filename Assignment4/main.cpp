@@ -9,11 +9,15 @@ using namespace std;
 
 ////prototypes
 bool fileInput( ifstream &fin );
-void printStatement( string line );
 void fileAnalysis( ifstream &fin );
+void printStatement( string line );
 void filter( string line , stack<char> &stack );
 void transfer( stack<char> &stack , vector<char> &vector );
 void matching( vector<char> &vector );
+void matchingComments( int openComment , int closeComment );
+void matchingSingleQuote( int singleQuote );
+void matchingDoubleQuote( int doubleQuote );
+void matchingBrackets( int openBracket , int closeBracket ) ;
 
 int main()
 {
@@ -50,10 +54,6 @@ bool fileInput( ifstream &fin )
         return true;
     }
 }
-void printStatement( string line )
-{
-    cout << line << endl ;
-}
 
 void fileAnalysis( ifstream &fin )
 {
@@ -65,7 +65,7 @@ void fileAnalysis( ifstream &fin )
     {
         getline( fin , line );                      //gets line from file
 
-        //printStatement( line );                     //prints line 
+        printStatement( line );                     //prints line 
         
         filter( line , stack );                     //characters are pushed onto stack 
     }
@@ -76,7 +76,14 @@ void fileAnalysis( ifstream &fin )
 
     /////vector populated   end->beginning 
 
-    matching( vector );
+    matching( vector );                             //matches symbols and prints out message accordingly 
+
+    /////////end
+}
+
+void printStatement( string line )
+{
+    cout << line << endl ;
 }
 
 void filter( string line , stack<char> &stack )
@@ -143,8 +150,137 @@ void matching( vector<char> &vector )
         }
     }
 
-    cout << openComment << endl ;
-    cout << closeComment << endl ;
+    /////comments
+    matchingComments( openComment , closeComment ) ;
+
+    /////single quotes
+    matchingSingleQuote( singleQuote );
+
+    /////double quotes
+    matchingDoubleQuote( doubleQuote ) ;
+
+    /////brackets
+    matchingBrackets( openBracket , closeBracket ) ;
+}
+
+void matchingComments( int openComment , int closeComment )
+{
+    if( openComment == closeComment ) 
+    {
+        while( openComment >= 0 )
+        {
+            cout << " /*  balanced by  */  " << endl ;
+            openComment-- ;
+        }
+    }
+    else
+    {
+        if( openComment > closeComment )
+        {
+           while( closeComment > 0 )
+            {
+                cout << " /*  balanced by  */  " << endl ;
+                closeComment-- ;
+            } 
+        }
+
+        if( openComment < closeComment )
+        {
+           while( openComment >= 0 )
+            {
+                cout << "' /* ' balanced by ' */ ' " << endl ;
+                openComment-- ;
+            } 
+        }
+    }
 
 }
 
+void matchingSingleQuote( int singleQuote )
+{
+    if( singleQuote % 2 == 0 )
+    {
+        while( singleQuote > 0 )
+        {
+            cout << " \' balanced by \' " << endl ;
+        }
+    }
+    else
+    {
+        int x = singleQuote - 1 ;
+
+        while( x > 0 )
+        {
+            cout << " \' balanced by \' " << endl ;
+            x-- ;
+        }
+
+        cout << " 1 unbalanced \' " << endl; 
+    }
+
+}
+
+void matchingDoubleQuote( int doubleQuote )
+{
+    if( doubleQuote % 2 == 0 )
+    {
+        while( doubleQuote > 0 )
+        {
+            cout << " \" balanced by \" " << endl ;
+        }
+    }
+    else
+    {
+        int x = doubleQuote - 1 ;
+
+        while( x > 0 )
+        {
+            cout << " \" balanced by \" " << endl ;
+            x-- ;
+        }
+
+        cout << " 1 unbalanced \" " << endl; 
+    }
+
+}
+
+void matchingBrackets( int openBracket , int closeBracket )
+{
+    if( openBracket == closeBracket ) 
+    {
+        while( openBracket > 0 )
+        {
+            cout << " {  balanced by  }  " << endl ;
+            openBracket-- ;
+        }
+    }
+    else
+    {
+        if( openBracket > closeBracket )
+        {
+            int x = openBracket - 1 ;
+
+            while( closeBracket > 0 )
+            {
+                cout << " {  balanced by  }  " << endl ;
+                closeBracket-- ;
+            } 
+
+            cout << "1 unbalanced {" << endl ;
+        }
+
+        if( openBracket < closeBracket )
+        {
+            int x = closeBracket - 1 ;
+
+            while( openBracket > 0 )
+            {
+                cout << "{ balanced by } " << endl ;
+                openBracket-- ;
+            } 
+
+            cout << "1 unbalanced }" << endl ;
+        }
+    }
+
+}
