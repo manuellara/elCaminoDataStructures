@@ -1,3 +1,69 @@
+/*
+    Manuel Lara
+    November 12 , 2017
+    Assignment 4
+    Pseudocode 
+
+    main()
+        first, create file handler 
+
+        pass file handler to function to check whether file will open or not
+
+        if target returns false, exit
+    
+    fileInput()
+        ask for file name
+
+        attepmt to open file
+
+        if it fails
+            return false
+        if it works
+            analyze file
+            close file
+            return true
+
+    fileAnalysis()
+        while not eof()
+            read file 
+            print line
+            pass line filter function
+        
+        call transfer funtion
+
+        call matching function
+    
+    filter()
+        create whitelist of all the characters you want
+
+        take every line and iterate through each character 
+            if character is not a white space and is in the whitelist
+                add character to stack 
+    
+    transfer()
+        while not empty 
+            copy stack into vector 
+    
+    matching()
+        count how many times whitelist character appears in the vector 
+
+        call matchingComments
+
+        call matchingSingleQuotes
+
+        call matchingDoubleQuotes
+
+        call matchingBrackets
+
+    matchingComments() - matchingsingleQuotes() - matchingDoubleQuotes() - matchingBrackets()
+        compares open and close commnets comment 
+            if theyre equal
+                all comments balanced
+            
+            if theyre not equal 
+                note which one is not equal 
+*/
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -22,7 +88,6 @@ void matchingBrackets( int openBracket , int closeBracket ) ;
 int main()
 {
     ifstream fin;                           //file input
-    ofstream fout;                          //file output
 
     bool target = fileInput( fin );       //returns file if valid 
 
@@ -34,7 +99,11 @@ int main()
 
 bool fileInput( ifstream &fin )
 {
-    string target = "sample.txt";       //file name
+    //string target = "sample.txt";       //file name
+    string target ; 
+
+    cout << "Enter file name: " ;
+    cin >> target;
 
     fin.open( target.c_str() );         //attempt to open target file
 
@@ -193,7 +262,6 @@ void matchingComments( int openComment , int closeComment )
             } 
         }
     }
-
 }
 
 void matchingSingleQuote( int singleQuote )
@@ -214,10 +282,8 @@ void matchingSingleQuote( int singleQuote )
             cout << " \' balanced by \' " << endl ;
             x-- ;
         }
-
         cout << " 1 unbalanced \' " << endl; 
     }
-
 }
 
 void matchingDoubleQuote( int doubleQuote )
@@ -241,7 +307,6 @@ void matchingDoubleQuote( int doubleQuote )
 
         cout << " 1 unbalanced \" " << endl; 
     }
-
 }
 
 void matchingBrackets( int openBracket , int closeBracket )
@@ -265,7 +330,6 @@ void matchingBrackets( int openBracket , int closeBracket )
                 cout << " {  balanced by  }  " << endl ;
                 closeBracket-- ;
             } 
-
             cout << "1 unbalanced {" << endl ;
         }
 
@@ -278,9 +342,7 @@ void matchingBrackets( int openBracket , int closeBracket )
                 cout << "{ balanced by } " << endl ;
                 openBracket-- ;
             } 
-
             cout << "1 unbalanced }" << endl ;
         }
     }
-
 }
