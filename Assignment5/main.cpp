@@ -1,21 +1,45 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <istream>
 
 using namespace std;
 
-////prototype
-string getAnagram();
+////prototypes
+void checkFile( istream &dictfile ) ;
+string getAnagram() ;
+int readDictionary( istream &dictfile , string dict[] ) ;
+void permute( string word , string dict[] , int count ) ;
+int recursivePermute( string word, const string dict[], int size, string results[] ) ;
+
+////const declarations 
+const int MAXRESULTS = 20 ;
+const int MAXDICTWORDS = 30000 ;
 
 int main()
 {
-    ifstream fin;                           //file input handler
+    ifstream dictfile;                                  //file input handler
 
-    //string anagram = getAnagram() ;
-    string anagram = "hello" ;              //test anagram
+    string dict[ MAXDICTWORDS ];                        //dictionary array declaration 
 
-    
+    int nwords ;                                        //variable for number of words in file
 
+    dictfile.open("words.txt") ;                        //attempt to open "words.txt"
+
+    checkFile( dictfile ) ;                             //prints error message if dictfile fails
+
+    nwords = readDictionary( dictfile , dict ) ;        //returns number of words in "words.txt" - stores result in 'nwords'
+
+    cout << nwords << endl ;
+}
+
+void checkFile( istream &dictfile )
+{
+    if ( !dictfile )
+    {
+        cout << "File not found" << endl ;
+        exit( 0 ) ;
+    }
 }
 
 string getAnagram()
@@ -26,4 +50,45 @@ string getAnagram()
     getline( cin , anagram ) ;
 
     return anagram;
+}
+
+int readDictionary( istream &dictfile , string dict[] )
+{
+    int count = 0 ;                                     //initialize count
+
+    while( !dictfile.eof() )                            //loop through dictfile
+    {
+        getline( dictfile , dict[ count ] ) ;           //add entry to dict[] array
+        count++ ;                                       //increment count
+    }
+
+    //string word = getAnagram() ;                        //gets anagram
+    string word = "dog" ;
+
+    permute( word , dict , count ) ;                    //pass word ( dict , count ) into permute function
+
+    return count ; 
+}
+
+void permute( string word , string dict[] , int count )
+{
+    string originalWord = word ;
+
+    string results[ MAXRESULTS ] ;                      //initialize results array - all permutations of anagram are placed here
+
+    int x = 0 ;                                         //counter 
+
+    do
+    {
+        results[ x ] = word ;                           //add permuted word to results array
+        x++ ;
+
+    } while( next_permutation( word.begin(), word.end() ) ) ;
+
+    int matches = recursivePermute( originalWord , dict , count , results ) ;
+}
+
+int recursivePermute( string word, const string dict[], int size, string results[] )
+{
+    return 1 ;
 }

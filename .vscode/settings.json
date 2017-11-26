@@ -8,5 +8,6 @@
         "string_view": "cpp",
         "vector": "cpp",
         "iostream": "cpp"
-    }
+    },
+    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.6/bin/python3"
 }
