@@ -11,6 +11,7 @@ string getAnagram() ;
 int readDictionary( istream &dictfile , string dict[] ) ;
 void permute( string word , string dict[] , int count ) ;
 int recursivePermute( string word, const string dict[], int size, string results[] ) ;
+int forLoop( int x ) ;
 
 ////const declarations 
 const int MAXRESULTS = 20 ;
@@ -30,7 +31,7 @@ int main()
 
     nwords = readDictionary( dictfile , dict ) ;        //returns number of words in "words.txt" - stores result in 'nwords'
 
-    cout << nwords << endl ;
+    cout << "Number of words : " << nwords << endl ;
 }
 
 void checkFile( istream &dictfile )
@@ -58,12 +59,12 @@ int readDictionary( istream &dictfile , string dict[] )
 
     while( !dictfile.eof() )                            //loop through dictfile
     {
-        getline( dictfile , dict[ count ] ) ;           //add entry to dict[] array
+        getline( dictfile , dict[count] ) ;             //add entry to dict[] array
         count++ ;                                       //increment count
     }
 
     //string word = getAnagram() ;                        //gets anagram
-    string word = "dog" ;
+    string word = "phi" ;
 
     permute( word , dict , count ) ;                    //pass word ( dict , count ) into permute function
 
@@ -72,23 +73,54 @@ int readDictionary( istream &dictfile , string dict[] )
 
 void permute( string word , string dict[] , int count )
 {
-    string originalWord = word ;
+    string originalWord = word ;                        //saves copy of original word
 
     string results[ MAXRESULTS ] ;                      //initialize results array - all permutations of anagram are placed here
 
-    int x = 0 ;                                         //counter 
+    int x = 0 ;                                         //counter variable
 
     do
     {
-        results[ x ] = word ;                           //add permuted word to results array
-        x++ ;
+        results[ x ] = word ;                           //add word permutation to results array
+        x++ ;                                           //iterates through result array
 
     } while( next_permutation( word.begin(), word.end() ) ) ;
 
-    int matches = recursivePermute( originalWord , dict , count , results ) ;
+    int matches = recursivePermute( originalWord , dict , count , results ) ;       //returns matches 
+
+    cout << "Word : " << originalWord << endl ;
+    cout << "Matches : " << matches << endl ;
 }
 
 int recursivePermute( string word, const string dict[], int size, string results[] )
 {
-    return 1 ;
+    int match = 0 ;
+
+    //for( int i = 0 ; i < size ; i++ )                     // working return //
+    //{
+        //for( int x = 0 ; x < MAXRESULTS ; x++ )
+        //{
+            //if( dict[ i ] == results[ x ] )
+            //{
+                //match++ ;
+            //}
+        //}
+    //}
+
+    forLoop( size ) ;                                       //call recursive for loop
+
+    return match ;
 }
+
+int forLoop( int x )                                   //recursive outer loop
+{
+    if ( x == -1 )
+    {
+        return -1 ;
+    }
+
+    cout << x << endl ;
+
+    return x + forLoop( x - 1 ) ;
+}
+
