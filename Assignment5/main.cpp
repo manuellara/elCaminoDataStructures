@@ -63,8 +63,8 @@ int readDictionary( istream &dictfile , string dict[] )
         count++ ;                                       //increment count
     }
 
-    //string word = getAnagram() ;                        //gets anagram
-    string word = "phi" ;
+    //string word = getAnagram() ;                        //gets anagram - hard coded word
+    string word = "10th" ;
 
     permute( word , dict , count ) ;                    //pass word ( dict , count ) into permute function
 
