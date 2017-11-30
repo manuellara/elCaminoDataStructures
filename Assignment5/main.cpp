@@ -11,7 +11,8 @@ string getAnagram() ;
 int readDictionary( istream &dictfile , string dict[] ) ;
 void permute( string word , string dict[] , int count ) ;
 int recursivePermute( string word, const string dict[], int size, string results[] ) ;
-int forLoop( int x ) ;
+int forLoop( string word, const string dict[], int size, string results[], int &match ) ;
+int forLoopInner( string dictWord , string results[] , int x , int &match ) ;
 
 ////const declarations 
 const int MAXRESULTS = 20 ;
@@ -31,7 +32,7 @@ int main()
 
     nwords = readDictionary( dictfile , dict ) ;        //returns number of words in "words.txt" - stores result in 'nwords'
 
-    cout << "Number of words : " << nwords << endl ;
+    cout << "Number of words : " << nwords << endl ;    //prints number of words in file
 }
 
 void checkFile( istream &dictfile )
@@ -96,7 +97,7 @@ int recursivePermute( string word, const string dict[], int size, string results
 {
     int match = 0 ;
 
-    //for( int i = 0 ; i < size ; i++ )                     // working return //
+    //for( int i = 0 ; i < size ; i++ )                     // working return
     //{
         //for( int x = 0 ; x < MAXRESULTS ; x++ )
         //{
@@ -107,20 +108,38 @@ int recursivePermute( string word, const string dict[], int size, string results
         //}
     //}
 
-    forLoop( size ) ;                                       //call recursive for loop
+    forLoop( word , dict , size , results , match ) ;                                       //call recursive for loop
 
     return match ;
 }
 
-int forLoop( int x )                                   //recursive outer loop
+int forLoop( string word , const string dict[] , int size , string results[] , int &match )            //recursive outer loop
 {
-    if ( x == -1 )
+    if ( size == -1 )
     {
         return -1 ;
     }
 
-    cout << x << endl ;
+    string dictWord = dict[size] ;                                      //saves word to temp
 
-    return x + forLoop( x - 1 ) ;
+    forLoopInner( dictWord , results , 20 , match ) ;                           //calls inner loop
+
+    return size + forLoop( word , dict , size - 1 , results , match) ;         //recursive loop simplification step
+}
+
+int forLoopInner( string dictWord , string results[] , int x , int &match )
+{
+
+    if( x == -1 )
+    {
+        return -1 ;
+    }
+
+    if( dictWord == results[x] && match == 0 )
+    {
+        match++ ;
+    }
+
+    return x + forLoopInner( dictWord , results , x - 1 , match ) ;
 }
 
