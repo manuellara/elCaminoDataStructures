@@ -12,7 +12,7 @@ int readDictionary( istream &dictfile , string dict[] ) ;
 void permute( string word , string dict[] , int count ) ;
 int recursivePermute( string word, const string dict[], int size, string results[] ) ;
 int forLoop( string word, const string dict[], int size, string results[], int &match ) ;
-int forLoopInner( string dictWord , string results[] , int x , int &match ) ;
+void recurPrint( const string results[], int size ) ;
 
 ////const declarations 
 const int MAXRESULTS = 20 ;
@@ -96,6 +96,7 @@ void permute( string word , string dict[] , int count )
 int recursivePermute( string word, const string dict[], int size, string results[] )
 {
     int match = 0 ;
+    int x = 0 ;
 
     //for( int i = 0 ; i < size ; i++ )                     // working return
     //{
@@ -114,32 +115,12 @@ int recursivePermute( string word, const string dict[], int size, string results
 }
 
 int forLoop( string word , const string dict[] , int size , string results[] , int &match )            //recursive outer loop
-{
+{    
     if ( size == -1 )
     {
-        return -1 ;
+        return -1 ;                                                      //exit condition
     }
 
-    string dictWord = dict[size] ;                                      //saves word to temp
 
-    forLoopInner( dictWord , results , 20 , match ) ;                           //calls inner loop
-
-    return size + forLoop( word , dict , size - 1 , results , match) ;         //recursive loop simplification step
+    return size + forLoop( word , dict , size - 1 , results , match ) ;         //recursive loop iteration/simplifying step
 }
-
-int forLoopInner( string dictWord , string results[] , int x , int &match )
-{
-
-    if( x == -1 )
-    {
-        return -1 ;
-    }
-
-    if( dictWord == results[x] && match == 0 )
-    {
-        match++ ;
-    }
-
-    return x + forLoopInner( dictWord , results , x - 1 , match ) ;
-}
-
