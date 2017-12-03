@@ -56,9 +56,9 @@
         call matchingBrackets
 
     matchingComments() - matchingsingleQuotes() - matchingDoubleQuotes() - matchingBrackets()
-        compares open and close commnets comment 
+        compares open and close symbols
             if theyre equal
-                all comments balanced
+                all symbols are balanced
             
             if theyre not equal 
                 note which one is not equal 
@@ -103,7 +103,7 @@ bool fileInput( ifstream &fin )
     string target ; 
 
     cout << "Enter file name: " ;
-    cin >> target;
+    getline( cin , target ) ;
 
     fin.open( target.c_str() );         //attempt to open target file
 
@@ -186,16 +186,19 @@ void matching( vector<char> &vector )
 
     int openComment = 0 , closeComment = 0 , singleQuote = 0 , doubleQuote = 0 , openBracket = 0 , closeBracket = 0;
 
-    for( int i = vector.size() ; i >= 0 ; i-- )
+    for( int i = 0 ; i <vector.size() ; i++ )
     {
-        if( vector[i] == whiteList[5] && vector[i+1] == whiteList[4] ) //open comment block
+        if( i < vector.size() - 1 )
         {
-            openComment += 1 ;
-        }
+            if( vector[i] == whiteList[5] && vector[i+1] == whiteList[4] ) //open comment block
+            {
+                openComment += 1 ;
+            }
 
-        if( vector[i] == whiteList[4] && vector[i+1] == whiteList[5] ) //close comment block
-        {
-            closeComment += 1 ;
+            if( vector[i] == whiteList[4] && vector[i+1] == whiteList[5] ) //close comment block
+            {
+                closeComment += 1 ;
+            }
         }
 
         if( vector[i] == whiteList[0] )  //single quote
@@ -230,6 +233,8 @@ void matching( vector<char> &vector )
 
     /////brackets
     matchingBrackets( openBracket , closeBracket ) ;
+
+    getchar() ;
 }
 
 void matchingComments( int openComment , int closeComment )
