@@ -1,67 +1,67 @@
 /*
 Manuel Lara
-CS2 - Assignmet 5 
+CS2 - Assignmet 5
 
 stack size: 50000000
 
 ///main///
-	declare file handler and dictionary array
-	opens words.txt - checks if words.txt will open
-	calls readdictionary and passes file handler and array
+declare file handler and dictionary array
+opens words.txt - checks if words.txt will open
+calls readdictionary and passes file handler and array
 
-	getchar only serves to pauses the program 
+getchar only serves to pauses the program
 
 //checkfile//
-	if dictfile fails, program exits
+if dictfile fails, program exits
 
 //getAnagram//
-	prompts the user for an anagream
-	returns anagram
+prompts the user for an anagream
+returns anagram
 
 //readDictionary//
-	calls readfile - passes file handler, dictionary array, and count
-	getAnagram is called and return value is saved in 'word'
-	calls permute - passes word , dict array , and count
-	returns count
+calls readfile - passes file handler, dictionary array, and count
+getAnagram is called and return value is saved in 'word'
+calls permute - passes word , dict array , and count
+returns count
 
 //readFile//
-	if dictFile is at the end of the file - return
+if dictFile is at the end of the file - return
 
-	otherwise populate dict
-	increment counter
+otherwise populate dict
+increment counter
 
-	call self again
+call self again
 
 //permute//
-	declare results array
+declare results array
 
-	permute word and populate results array with permutations
+permute word and populate results array with permutations
 
-	call recursivePermute - pass word, dict, count, results
+call recursivePermute - pass word, dict, count, results
 
 //recursivePermute//
-	calls forloop - passes word , dict, count , results
+calls forloop - passes word , dict, count , results
 
 //forloop//
-	iterates through dict
-	if size == -1, return
+iterates through dict
+if size == -1, return
 
-	otherwise store word in temp variable
-	call innerLoop - pass temp , results , match , count
+otherwise store word in temp variable
+call innerLoop - pass temp , results , match , count
 
-	call self again
+call self again
 
 //innerLoop//
-	iterate through results - compare all of results to temp 
-	if count == -1 , return
+iterate through results - compare all of results to temp
+if count == -1 , return
 
-	if temp == results
-	call recurPrint - pass results , count
+if temp == results
+call recurPrint - pass results , count
 
-	call self again
+call self again
 
 //recurPrint//
-	prints out matching word
+prints out matching word
 */
 
 #include <iostream>
@@ -70,16 +70,16 @@ stack size: 50000000
 #include <istream>
 #include <algorithm>
 
+
 using namespace std;
 
 ////prototypes
+void permuteForLoop(string a, int i, int n, int j , string dict[] , int size , string results[] );
 void checkFile(istream &dictfile);
 string getAnagram();
 int readDictionary(istream &dictfile, string dict[]);
-void permute(string word, string dict[], int count);
 int recursivePermute(string word, const string dict[], int size, string results[]);
-void forLoop(string word, const string dict[], int size, string results[], int &match);
-void innerLoop(string word, string results[], int &match, int count);
+void forLoop(string word, const string dict[], int size, string results[]);
 void readFile(istream &dictfile, string dict[], int &count);
 void recurPrint(const string results[], int size);
 
@@ -89,8 +89,11 @@ const int MAXDICTWORDS = 30000;
 
 int main()
 {
+	int match = 0;
+
 	ifstream dictfile;                                  //file input handler
 
+	string results[MAXRESULTS];
 	string dict[MAXDICTWORDS];                        //dictionary array declaration 
 
 	dictfile.open("words.txt");                        //attempt to open "words.txt"
@@ -99,7 +102,40 @@ int main()
 
 	int nwords = readDictionary(dictfile, dict);        //returns number of words in "words.txt" - stores result in 'nwords'
 
-	getchar();
+	string word = getAnagram();                        //gets anagram - hard coded word
+	//string word = "phi";
+
+	int wordLen = word.length(); 
+
+	permuteForLoop(word , 0, wordLen-1 , 0 , dict , nwords , results);				//permutation of word
+
+	recurPrint(results, 0);
+
+	cout << endl << "done." << endl;
+	getchar();										//pause before exiting
+}
+
+void permuteForLoop(string a , int i , int n , int j, string dict[], int nwords, string results[])
+{
+	if (i == n)
+	{
+		recursivePermute(a, dict, nwords, results);			//passes every permutation to recursivePermute()
+		//cout << a << endl;
+
+		return;
+	}
+
+	if ( j <= n)
+	{
+		swap(a[i], a[j]);						//swaps first and last chars
+		permuteForLoop(a, i+1 , n , j, dict, nwords, results);  	 // Choose the remaining letters
+		if (j % 2 == 0)
+		{
+			swap(a[i], a[j]);    // Undo the previous swap so we can choose the next possibility for a[j]
+		}
+		permuteForLoop(a, i, n, j+1, dict, nwords, results );
+	}
+
 }
 
 void checkFile(istream &dictfile)
@@ -120,6 +156,8 @@ string getAnagram()
 
 	cin.ignore(128, '\n');
 
+	cout << endl;
+
 	return anagram;
 }
 
@@ -129,16 +167,12 @@ int readDictionary(istream &dictfile, string dict[])
 
 	readFile(dictfile, dict, count);
 
-	string word = getAnagram() ;                        //gets anagram - hard coded word
-
-	permute(word, dict, count);                    //pass word ( dict , count ) into permute function
-
 	return count;
 }
 
-void readFile(istream &dictfile , string dict[], int &count)
+void readFile(istream &dictfile, string dict[], int &count)
 {
-	if (dictfile.eof())
+	if (dictfile.eof() || count == MAXDICTWORDS - 1)
 	{
 		return;
 	}
@@ -149,69 +183,61 @@ void readFile(istream &dictfile , string dict[], int &count)
 	readFile(dictfile, dict, count);
 }
 
-void permute(string word, string dict[], int count)
-{
-	string originalWord = word;                        //saves copy of original word
-
-	string results[MAXRESULTS];                      //initialize results array - all permutations of anagram are placed here
-
-	int x = 0;                                         //counter variable
-
-	do
-	{
-		results[x] = word;                           //add word permutation to results array
-		x++;                                           //iterates through result array
-
-	} while (next_permutation(word.begin(), word.end()));
-
-	int matches = recursivePermute(originalWord, dict, count, results);       //returns matches 
-}
-
 int recursivePermute(string word, const string dict[], int size, string results[])
 {
-	int match = 0;
+	forLoop(word, dict, size, results);                                       //call recursive for loop
 
-	forLoop(word, dict, size, results, match);                                       //call recursive for loop
-
-	return match;
+	return 0;
 }
 
-void forLoop(string word, const string dict[], int size, string results[], int &match)            //recursive outer loop
+void forLoop(string word, const string dict[], int size, string results[])            //recursive outer loop
 {
-	int count = 20;
+	bool x = true;
+	int y = 0 ;
 
 	if (size == -1)
 	{
 		return;                                                      //exit condition
 	}
 
-	string temp = dict[size];									//gets word
-	
-	innerLoop(temp, results, match, count);						//inner for loop
-
-	forLoop(word, dict, size - 1 , results, match);				//iterator 
-}
-
-void innerLoop( string word , string results[] , int &match, int count)
-{
-	if (count == -1)
+	if (dict[size] == word  )
 	{
-		return;
-	}
-
-	if ( word != "" && results[count] != "" )
-	{
-		if (word == results[count])
+		if (x)
 		{
-			recurPrint(results, count);
-			match++;
+			if (results[y].length() > 0)
+			{
+				y++;
+
+				if (y == MAXRESULTS)
+				{
+					cout << "MAX RESULTS exceeded....." << endl;
+					getchar();
+					exit(0);
+				}
+			}
+			else
+			{
+				x = false;
+			}
 		}
+
+		results[y] = word;
 	}
 
-	innerLoop(word, results, match, count - 1);
+	forLoop(word, dict, size - 1, results);				//iterator 
 }
 
 void recurPrint(const string results[], int size)
 {
-	cout << "Matching word " << results[size] << endl;
+	if ( size == 20)
+	{
+		return;
+	}
+
+	if (results[size].length() > 0)
+	{
+		cout << "Matching result: " << results[size] << endl;
+	}
+
+	recurPrint(results, size + 1);
 }
