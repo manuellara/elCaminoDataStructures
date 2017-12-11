@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <ctype.h>
 
 #include "wordTree.cpp"
 
@@ -11,7 +10,7 @@ using namespace std;
 
 int main()
 {
-    string x = 'BeckY' ;
+    string x = "BeckY" ;
 
     convertToLower( x ) ;
 
@@ -20,9 +19,9 @@ int main()
 }
 
 
-void convertToLower( string &x )
+void convertToLower( string &x )            //converts string to lower case
 {
-    for ( i = 0 ; i < x.length()  ; i++ )
+    for ( int i = 0 ; i < x.length()  ; i++ )
     {
         x[i] = tolower( x[i] ) ;
     }

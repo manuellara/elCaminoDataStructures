@@ -16,6 +16,7 @@ class wordTree
     private:
         wordNode *root;
 
+
         void addPrivate( string v , wordNode *ptr ) ;
 
         void printInOrderPrivate( wordNode *ptr );

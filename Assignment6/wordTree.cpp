@@ -7,6 +7,8 @@ using namespace std;
 
 //wordTree() - default constructor - sets root to 'nullptr'
 
+
+//creates leaf
 wordNode* wordTree::createLeaf( string v )    //creates new leaf
 {
     wordNode *n = new wordNode ;
@@ -18,6 +20,7 @@ wordNode* wordTree::createLeaf( string v )    //creates new leaf
     return n ;
 }
 
+//adds leaf to tree
 void wordTree::add( string v )
 {
     addPrivate( v , root ) ;        //calls private add function
