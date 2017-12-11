@@ -18,12 +18,10 @@ class wordTree
 
         void addPrivate( string v , wordNode *ptr ) ;
 
+        void printInOrderPrivate( wordNode *ptr );
+
     public:
         wordTree() : root( nullptr ) {} ;  //default constructor
-
-        //wordTree( const wordTree &rhs );  //copy constructor 
-
-        //const wordTree &operator=( const wordTree &rhs );   //assignmnet operator
 
 
 
@@ -31,14 +29,15 @@ class wordTree
 
         void add( string v ) ;   //adds a given word to the tree if it does not already exist & increments appropriate counter
 
+        void printInOrder();
+
+
         //int distinctWords() const;  //returns # of distinct words
 
         //int totalWords() const;   //returns # of total words including duplicate values 
 
 
 
-
-        //friend ostream &operator<<( ostream &out , const wordTree &rhs ); //prints words of tree in alphabetical order and their occurance next to it
 
         ~wordTree(); //destructor
 };

@@ -14,6 +14,8 @@ wordNode* wordTree::createLeaf( string v )    //creates new leaf
     n->data = v ;           //assigns value
     n->left = nullptr ;     //sets left to null
     n->right = nullptr ;    //sets right to null
+
+    return n ;
 }
 
 void wordTree::add( string v )
@@ -55,4 +57,33 @@ void wordTree::addPrivate( string v , wordNode *ptr)
     }
 
 
+}
+
+void wordTree::printInOrder()
+{
+    printInOrderPrivate( root ) ;
+}
+
+//uses IN-ORDER traversal 
+void wordTree::printInOrderPrivate( wordNode *ptr )
+{
+    if( root != nullptr )                           //if root is not null
+    {
+        if( ptr->left != nullptr )
+        {
+            printInOrderPrivate( ptr->left );        //go left
+        }
+
+        cout << ptr->left << endl ;                 //process current
+
+        if( ptr->right != nullptr )
+        {
+            printInOrderPrivate( ptr->right );       //go right
+        }
+
+    }
+    else
+    {
+        cout << "The tree is empty..." << endl ;
+    }
 }
