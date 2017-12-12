@@ -3,18 +3,18 @@
 
 using namespace std;
 
-struct wordNode
-{
-    string data; //value
-
-    wordNode *left; //left pointer 
-    wordNode *right; //right pointer 
-};
-
 class wordTree
 {
     private:
-        wordNode *root;
+    struct wordNode
+    {
+        string data; //value
+
+        wordNode *left; //left pointer 
+        wordNode *right; //right pointer 
+    };
+
+        wordNode *root; //root pointer
 
 
         void addPrivate( string v , wordNode *ptr ) ;
@@ -22,7 +22,7 @@ class wordTree
         void printInOrderPrivate( wordNode *ptr );
 
     public:
-        wordTree() : root( nullptr ) {} ;  //default constructor
+        wordTree() ;  //default constructor
 
 
 
@@ -40,5 +40,5 @@ class wordTree
 
 
 
-        ~wordTree(); //destructor
+        //~wordTree(); //destructor
 };

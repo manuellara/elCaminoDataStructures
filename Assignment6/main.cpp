@@ -10,11 +10,21 @@ using namespace std;
 
 int main()
 {
-    string x = "BeckY" ;
+    string treeData[5] = { "ECHo" , "BRAVO" , "AlPha" , "Delta" , "cHArlie" } ;
 
-    convertToLower( x ) ;
+    for( int i = 0 ; i < 5 ; i++ )
+    {
+        convertToLower( treeData[i] ) ;
+    }
 
-    cout << x << endl ;   
+    wordTree myTree ;
+
+    for( int i = 0 ; i < 5 ; i++ )
+    {
+        myTree.add( treeData[i] ) ;
+    }
+
+    myTree.printInOrder();
 
 }
 

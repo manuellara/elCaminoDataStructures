@@ -5,11 +5,13 @@
 
 using namespace std;
 
-//wordTree() - default constructor - sets root to 'nullptr'
-
+wordTree::wordTree() 
+{
+    root = nullptr ;
+}
 
 //creates leaf
-wordNode* wordTree::createLeaf( string v )    //creates new leaf
+wordTree::wordNode* wordTree::createLeaf( string v )    //creates new leaf
 {
     wordNode *n = new wordNode ;
 
@@ -32,7 +34,7 @@ void wordTree::addPrivate( string v , wordNode *ptr)
     {
         root = createLeaf( v ) ;    //add leaf with value 'v'
     }
-    else if( v < ptr->data )       //if value is less than current root value
+    else if( ptr->data.compare( v ) > 0 )   //if value is less than current root value - GREATER == LESS THAN ( A is less than C )
     {
         if( ptr->left != nullptr )  //if left pointer is not empty
         {
@@ -43,7 +45,7 @@ void wordTree::addPrivate( string v , wordNode *ptr)
             ptr->left = createLeaf( v ) ;   //add new leaf
         }
     }
-    else if( v > ptr->data )       //if value is greater than current root value
+    else if( ptr->data.compare( v ) < 0 )   //if value is greater than current root value - LESS THAN == GREATER THAN ( C is greater than A )
     {
         if( ptr->right != nullptr )  //if left pointer is not empty
         {
@@ -77,7 +79,7 @@ void wordTree::printInOrderPrivate( wordNode *ptr )
             printInOrderPrivate( ptr->left );        //go left
         }
 
-        cout << ptr->left << endl ;                 //process current
+        cout << ptr->left->data << endl ;                 //process current
 
         if( ptr->right != nullptr )
         {
