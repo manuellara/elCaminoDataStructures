@@ -61,7 +61,6 @@ void filter(vector<string> &v)
 	}
 }
 
-//clean up white spaces 
 
 int main()
 {
@@ -77,31 +76,42 @@ int main()
 	}
 	else
 	{
-		filter(vector);			//filter
+		//filter to only include alpha characters 
+		filter(vector);			
 
+		//filter to convert everything to lower
 		for (int i = 0; i != vector.size(); i++)
 		{
 			convertToLower(vector[i]);
 		}
 	}
 
+	//creates wordTree object
+	wordTree myTree;
+
+	//adds all vector items into wordTree
 	for (int i = 0 ; i != vector.size()-1 ; i++)
 	{
-		cout << vector[i] << endl;
-	}
+		if (vector[i] < "a")
+		{
+			continue;
+		}
 
-	/*wordTree myTree;
-
-	for (int i = 0 ; i != vector.size()-1 ; i++)
-	{
 		myTree.addLeaf(vector[i]);
 	}
 
+	//prints myTree IN-ORDER
 	myTree.printInOrder();
 
-	myTree.~wordTree();*/
+	//word counts
+	cout << endl << "Total Words attempted: " << myTree.totalWords() << endl;
+	cout << "Unique Words added to myTree: " << myTree.distinctWords() << endl;
+
+	//deletes myTree POST-ORDER
+	myTree.~wordTree();
 
 
 
-	getchar();									//pause before exiting
+	//pause before exiting
+	getchar();
 }
