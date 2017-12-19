@@ -6,6 +6,8 @@ using namespace std;
 struct node
 {
 	string data;
+	int occurrence;
+
 	node* left;
 	node* right;
 };
@@ -22,6 +24,7 @@ class wordTree
 		void printInOrderPrivate(node* ptr);
 
 		void removeWordTree(node* ptr);
+
 
 	public:
 		int dWords = 0;

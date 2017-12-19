@@ -90,7 +90,7 @@ int main()
 	wordTree myTree;
 
 	//adds all vector items into wordTree
-	for (int i = 0 ; i != vector.size()-1 ; i++)
+	for (int i = 0 ; i != vector.size() ; i++)
 	{
 		if (vector[i] < "a")
 		{

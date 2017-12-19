@@ -11,6 +11,7 @@ node* wordTree::createLeafPrivate(string v)
 	node* n = new node;
 
 	n->data = v;
+	n->occurrence = 1;
 	n->right = nullptr;
 	n->left = nullptr;
 
@@ -49,6 +50,7 @@ void wordTree::addLeafPrivate(string v, node* ptr)
 	}
 	else
 	{
+		ptr->occurrence += 1;
 		tWords++ ;
 	}
 }
@@ -60,10 +62,10 @@ void wordTree::printInOrderPrivate(node* ptr)
 	{
 		if (ptr->left != nullptr)
 		{
-			printInOrderPrivate(ptr->left);		//go left until you reach the end
+			printInOrderPrivate(ptr->left);			//go left until you reach the end
 		}
 
-		cout << ptr->data << endl;				//proccess current node
+		cout << ptr->data << " " << ptr->occurrence <<  endl;			//proccess current node
 
 		if (ptr->right != nullptr)
 		{
@@ -95,6 +97,7 @@ void wordTree::removeWordTree(node* ptr)
 }
 
 
+
 //Public:
 wordTree::wordTree()
 {
@@ -123,7 +126,7 @@ int wordTree::distinctWords() const
 
 int wordTree::totalWords() const
 {
-	return tWords;
+	return tWords + distinctWords();
 }
 
 wordTree::~wordTree()
