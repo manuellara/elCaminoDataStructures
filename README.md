@@ -8,7 +8,7 @@ Assignment 2 - Prep :: classes
 
 Assignment 2 - Real Deal :: pointers & classes
 
-Assignment 3 :: inheritance & polymorphism 
+Assignment 3 :: Inheritance & polymorphism 
 
 Assignemnt 4 :: STL ( stacks , queues , vectors , maps )
 
